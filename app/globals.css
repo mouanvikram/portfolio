@@ -1,0 +1,312 @@
+:root {
+  --bg: #fafaf9;
+  --fg: #1c1917;
+  --muted: #78716c;
+  --faint: #a8a29e;
+  --line: #e7e5e4;
+  --hover: #f1f0ee;
+  --card: #ffffff;
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111110;
+    --fg: #ededec;
+    --muted: #8f8f8a;
+    --faint: #5c5c58;
+    --line: #2a2a28;
+    --hover: #1b1b1a;
+    --card: #181817;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #111110;
+  --fg: #ededec;
+  --muted: #8f8f8a;
+  --faint: #5c5c58;
+  --line: #2a2a28;
+  --hover: #1b1b1a;
+  --card: #181817;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: 16px/1.65 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: var(--fg); color: var(--bg); }
+
+.shell {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 24px;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 32px 0 96px;
+}
+.wordmark { font-weight: 600; letter-spacing: -0.01em; }
+.header-right { display: flex; align-items: center; gap: 12px; }
+
+.clock {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+.clock-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #22c55e;
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  50% { opacity: 0.35; }
+}
+
+.theme-toggle {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: color 150ms var(--ease), background-color 150ms var(--ease), transform 100ms var(--ease);
+}
+.theme-toggle:hover { color: var(--fg); background: var(--hover); }
+.theme-toggle:active { transform: scale(0.92); }
+.theme-toggle svg {
+  grid-area: 1 / 1;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  transition: transform 400ms var(--ease), opacity 200ms var(--ease);
+}
+/* Show the icon for the theme you'd switch *to*. */
+.icon-sun { opacity: 0; transform: rotate(-90deg) scale(0.6); }
+:root[data-theme="dark"] .icon-sun { opacity: 1; transform: none; }
+:root[data-theme="dark"] .icon-moon { opacity: 0; transform: rotate(90deg) scale(0.6); }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .icon-sun { opacity: 1; transform: none; }
+  :root:not([data-theme="light"]) .icon-moon { opacity: 0; transform: rotate(90deg) scale(0.6); }
+}
+
+/* Main */
+.main {
+  flex: 1;
+  animation: enter 280ms var(--ease) both;
+}
+@keyframes enter {
+  from { opacity: 0; transform: translateY(4px); }
+}
+
+h1 { font-size: 28px; line-height: 1.2; letter-spacing: -0.02em; font-weight: 600; margin: 0 0 24px; }
+p { margin: 0 0 16px; }
+
+/* Essay with margin notes */
+.essay {
+  position: relative;
+  max-width: 580px;
+}
+.essay p {
+  font-size: 18px;
+  line-height: 1.8;
+  transition: color 250ms var(--ease);
+}
+/* While a note is open, the rest of the essay recedes. */
+.essay:has(.note:hover, .note:focus-within) p { color: var(--faint); }
+
+.essay h1 { font-size: 32px; margin-bottom: 28px; }
+
+.note { outline: none; }
+.note-term {
+  color: var(--fg);
+  text-decoration: underline dotted var(--faint);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 4px;
+  cursor: help;
+  border-radius: 4px;
+  transition: text-decoration-color 200ms var(--ease), background-color 200ms var(--ease);
+}
+.note:hover .note-term,
+.note:focus-within .note-term {
+  text-decoration-color: var(--fg);
+  background: var(--hover);
+  box-shadow: 0 0 0 3px var(--hover);
+}
+.note:focus-visible .note-term { outline: 2px solid var(--fg); outline-offset: 3px; }
+
+/* The card: absolutely positioned with top:auto so it lines up with the hovered line,
+   and pushed into the right-hand margin. */
+.note-card {
+  position: absolute;
+  left: calc(100% + 48px);
+  width: 260px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--card);
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.55;
+  box-shadow: 0 8px 24px -12px rgb(0 0 0 / 0.18);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-8px);
+  z-index: 1;
+  /* Linger briefly on leave so the cursor can travel to the card's links. */
+  transition:
+    opacity 200ms var(--ease) 300ms,
+    transform 250ms var(--ease) 300ms,
+    visibility 0s linear 550ms;
+}
+.note:hover .note-card,
+.note:focus-within .note-card {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  z-index: 2;
+  transition-delay: 0s;
+}
+.note-card strong { display: block; margin-bottom: 2px; color: var(--fg); font-weight: 600; }
+.note-card .link { color: var(--fg); }
+.note-links { display: flex; gap: 14px; margin-top: 8px; }
+
+.stack {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 14px;
+  row-gap: 3px;
+}
+.stack span:nth-child(odd) { color: var(--fg); font-weight: 500; }
+
+/* Narrow screens: no margin, so the card drops under the line instead. */
+@media (max-width: 900px) {
+  .note-card {
+    left: 0;
+    right: 0;
+    width: auto;
+    margin-top: 2.2em;
+    transform: translateY(-4px);
+    color: var(--fg);
+    box-shadow: 0 12px 32px -12px rgb(0 0 0 / 0.3);
+  }
+}
+
+/* Inline link: underline draws in from the left */
+.link {
+  color: inherit;
+  text-decoration: none;
+  background:
+    linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat,
+    linear-gradient(var(--line), var(--line)) 0 100% / 100% 1px no-repeat;
+  transition: background-size 250ms var(--ease), color 150ms var(--ease);
+}
+.link:hover { background-size: 100% 1px, 100% 1px; color: var(--fg); }
+
+/* Footer */
+.footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 96px 0 32px;
+  color: var(--muted);
+  font-size: 14px;
+}
+.footer-links { position: relative; display: flex; gap: 16px; }
+
+/* Footer preview cards: rise above the links, anchored to the link group's right edge. */
+.pop-card {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 14px);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: max-content;
+  max-width: min(640px, calc(100vw - 48px));
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--card);
+  color: var(--muted);
+  font-size: 13px;
+  box-shadow: 0 16px 40px -16px rgb(0 0 0 / 0.25);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px) scale(0.98);
+  transform-origin: bottom right;
+  z-index: 1;
+  transition:
+    opacity 200ms var(--ease) 200ms,
+    transform 250ms var(--ease) 200ms,
+    visibility 0s linear 450ms;
+}
+/* Invisible bridge so the cursor can cross the gap into the card. */
+.pop-card::after { content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 16px; }
+.pop:hover .pop-card,
+.pop:focus-within .pop-card {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  z-index: 2;
+  transition-delay: 0s;
+}
+.pop:hover .link { background-size: 100% 1px, 100% 1px; color: var(--fg); }
+
+.pop-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; }
+.pop-meta { font-variant-numeric: tabular-nums; }
+.pop-action { color: var(--fg); }
+
+.profile { display: flex; align-items: center; gap: 10px; min-width: 220px; }
+.profile img { border-radius: 50%; background: var(--hover); flex: none; }
+.profile strong { display: block; color: var(--fg); font-weight: 600; font-size: 14px; }
+.profile-sub { display: block; }
+
+/* Contribution graph — GitHub's greens, per theme. */
+.graph { display: block; width: 600px; max-width: 100%; height: auto; }
+.graph-month { fill: var(--muted); font-size: 9px; }
+.graph-l0 { fill: var(--g0); }
+.graph-l1 { fill: var(--g1); }
+.graph-l2 { fill: var(--g2); }
+.graph-l3 { fill: var(--g3); }
+.graph-l4 { fill: var(--g4); }
+
+:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; border-radius: 6px; }
+
+@media (max-width: 560px) {
+  .header { padding-bottom: 64px; }
+  .footer { flex-direction: column-reverse; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
