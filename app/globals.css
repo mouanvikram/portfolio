@@ -6,6 +6,11 @@
   --line: #e7e5e4;
   --hover: #f1f0ee;
   --card: #ffffff;
+  --g0: #ebedf0;
+  --g1: #9be9a8;
+  --g2: #40c463;
+  --g3: #30a14e;
+  --g4: #216e39;
   --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
   color-scheme: light;
 }
@@ -19,6 +24,11 @@
     --line: #2a2a28;
     --hover: #1b1b1a;
     --card: #181817;
+    --g0: #242422;
+    --g1: #0e4429;
+    --g2: #006d32;
+    --g3: #26a641;
+    --g4: #39d353;
     color-scheme: dark;
   }
 }
@@ -31,6 +41,11 @@
   --line: #2a2a28;
   --hover: #1b1b1a;
   --card: #181817;
+  --g0: #242422;
+  --g1: #0e4429;
+  --g2: #006d32;
+  --g3: #26a641;
+  --g4: #39d353;
   color-scheme: dark;
 }
 
@@ -305,6 +320,7 @@ p { margin: 0 0 16px; }
 @media (max-width: 560px) {
   .header { padding-bottom: 64px; }
   .footer { flex-direction: column-reverse; }
+  .pop-card { right: auto; left: 0; transform-origin: bottom left; }
 }
 
 @media (prefers-reduced-motion: reduce) {
