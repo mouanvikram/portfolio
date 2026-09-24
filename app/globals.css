@@ -138,9 +138,9 @@ body {
 }
 .clock:hover .clock-tip, .clock:focus-visible .clock-tip { opacity: 1; transform: none; }
 
-/* Theme change: the new theme fills in like a contribution graph, left to right (clip-path animated from JS). */
+/* Theme change: a quick 100ms crossfade. */
 ::view-transition-old(root),
-::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+::view-transition-new(root) { animation-duration: 100ms; animation-timing-function: ease-out; }
 
 .theme-toggle {
   display: grid;
