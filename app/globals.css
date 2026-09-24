@@ -108,6 +108,39 @@ body {
 @keyframes pulse {
   50% { opacity: 0.35; }
 }
+.clock { position: relative; outline: none; cursor: default; transition: color 150ms var(--ease); }
+.clock:hover, .clock:focus-visible { color: var(--fg); }
+
+/* Only digits that change remount, so only they roll in. */
+.clock-time { display: inline-flex; overflow: hidden; }
+.clock-digit { display: inline-block; animation: roll 320ms var(--ease); }
+@keyframes roll {
+  from { transform: translateY(-80%); opacity: 0; filter: blur(1px); }
+}
+
+.clock-tip {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  padding: 6px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--muted);
+  font-size: 12px;
+  white-space: nowrap;
+  box-shadow: 0 8px 24px -12px rgb(0 0 0 / 0.2);
+  opacity: 0;
+  transform: translateY(-4px);
+  pointer-events: none;
+  transition: opacity 180ms var(--ease), transform 220ms var(--ease);
+  z-index: 3;
+}
+.clock:hover .clock-tip, .clock:focus-visible .clock-tip { opacity: 1; transform: none; }
+
+/* Theme change: the new theme fills in like a contribution graph, left to right (clip-path animated from JS). */
+::view-transition-old(root),
+::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
 
 .theme-toggle {
   display: grid;
