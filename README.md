@@ -1,4 +1,4 @@
-# mouan.in
+# vikram.mouan.in
 
 Personal site. Next.js 16 static export — plain HTML with inlined CSS, served from a CDN.
 

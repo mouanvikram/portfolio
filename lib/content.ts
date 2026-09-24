@@ -1,6 +1,6 @@
 export const site = {
   name: "Vikram Mouan",
-  url: "https://mouan.in",
+  url: "https://vikram.mouan.in",
   description: "Builder. I ship real-time systems end to end — currently building uncut-ui.",
   timeZone: "Asia/Kolkata",
   timeZoneLabel: "IST",

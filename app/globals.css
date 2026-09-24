@@ -64,7 +64,7 @@ body {
 ::selection { background: var(--fg); color: var(--bg); }
 
 .shell {
-  max-width: 960px;
+  max-width: 680px;
   margin: 0 auto;
   padding: 0 24px;
   min-height: 100dvh;
@@ -201,8 +201,9 @@ p { margin: 0 0 16px; }
 
 .essay h1 { font-size: 32px; margin-bottom: 28px; }
 
-.note { outline: none; }
+.note { position: relative; outline: none; }
 .note-term {
+  white-space: nowrap;
   color: var(--fg);
   text-decoration: underline dotted var(--faint);
   text-decoration-thickness: 1.5px;
@@ -219,12 +220,15 @@ p { margin: 0 0 16px; }
 }
 .note:focus-visible .note-term { outline: 2px solid var(--fg); outline-offset: 3px; }
 
-/* The card: absolutely positioned with top:auto so it lines up with the hovered line,
-   and pushed into the right-hand margin. */
+/* The card opens just below the hovered phrase and scales out of it.
+   `left` and `--ox` (the phrase's centre) are set from JS so it stays inside the essay. */
 .note-card {
   position: absolute;
-  left: calc(100% + 48px);
-  width: 260px;
+  top: calc(100% + 10px);
+  left: 0;
+  width: 280px;
+  max-width: calc(100vw - 48px);
+  transform-origin: var(--ox, 24px) top;
   padding: 12px 14px;
   border: 1px solid var(--line);
   border-radius: 12px;
@@ -235,7 +239,7 @@ p { margin: 0 0 16px; }
   box-shadow: 0 8px 24px -12px rgb(0 0 0 / 0.18);
   opacity: 0;
   visibility: hidden;
-  transform: translateX(-8px);
+  transform: translateY(-4px) scale(0.96);
   z-index: 1;
   /* Linger briefly on leave so the cursor can travel to the card's links. */
   transition:
@@ -251,6 +255,8 @@ p { margin: 0 0 16px; }
   z-index: 2;
   transition-delay: 0s;
 }
+/* Invisible bridge across the gap so moving from phrase to card keeps it open. */
+.note-card::before { content: ""; position: absolute; left: 0; right: 0; bottom: 100%; height: 12px; }
 .note-card strong { display: block; margin-bottom: 2px; color: var(--fg); font-weight: 600; }
 .note-card .link { color: var(--fg); }
 .note-links { display: flex; gap: 20px; margin-top: 8px; }
@@ -319,18 +325,6 @@ p { margin: 0 0 16px; }
 }
 .stack span:nth-child(odd) { color: var(--fg); font-weight: 500; }
 
-/* Narrow screens: no margin, so the card drops under the line instead. */
-@media (max-width: 900px) {
-  .note-card {
-    left: 0;
-    right: 0;
-    width: auto;
-    margin-top: 2.2em;
-    transform: translateY(-4px);
-    color: var(--fg);
-    box-shadow: 0 12px 32px -12px rgb(0 0 0 / 0.3);
-  }
-}
 
 /* Inline link: underline draws in from the left */
 .link {
@@ -368,16 +362,18 @@ p { margin: 0 0 16px; }
 /* Footer pads are centred and at least 40px wide, so even "X" is easy to hit. */
 .pop > .link::before { left: 50%; right: auto; width: calc(100% + 20px); min-width: 40px; transform: translateX(-50%); }
 
-/* Footer preview cards: rise above the links, anchored to the link group's right edge. */
+/* Footer preview cards rise out of the hovered link, centred on it.
+   `left` and `--ox` are set from JS so the card stays inside the footer. */
+.pop { position: relative; }
 .pop-card {
   position: absolute;
-  right: 0;
+  left: 0;
   bottom: calc(100% + 14px);
   display: flex;
   flex-direction: column;
   gap: 12px;
   width: max-content;
-  max-width: min(640px, calc(100vw - 48px));
+  max-width: calc(100vw - 48px);
   padding: 14px 16px;
   border: 1px solid var(--line);
   border-radius: 14px;
@@ -388,7 +384,7 @@ p { margin: 0 0 16px; }
   opacity: 0;
   visibility: hidden;
   transform: translateY(6px) scale(0.98);
-  transform-origin: bottom right;
+  transform-origin: var(--ox, 50%) bottom;
   z-index: 1;
   transition:
     opacity 200ms var(--ease) 200ms,
@@ -477,7 +473,6 @@ p { margin: 0 0 16px; }
 @media (max-width: 560px) {
   .header { padding-bottom: 64px; }
   .footer { flex-direction: column-reverse; }
-  .pop-card { right: auto; left: 0; transform-origin: bottom left; }
 }
 
 @media (prefers-reduced-motion: reduce) {
