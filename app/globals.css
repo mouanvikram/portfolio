@@ -253,7 +253,63 @@ p { margin: 0 0 16px; }
 }
 .note-card strong { display: block; margin-bottom: 2px; color: var(--fg); font-weight: 600; }
 .note-card .link { color: var(--fg); }
-.note-links { display: flex; gap: 14px; margin-top: 8px; }
+.note-links { display: flex; gap: 20px; margin-top: 8px; }
+
+/* Screenshot preview at the top of a note card, with a browser-style URL pill. */
+.note-preview {
+  position: relative;
+  display: block;
+  margin: -4px -6px 12px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--hover);
+}
+.note-preview img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform 400ms var(--ease);
+}
+.note-preview:hover img { transform: scale(1.04); }
+.note-preview-url {
+  position: absolute;
+  left: 8px;
+  bottom: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgb(0 0 0 / 0.6);
+  color: #fff;
+  font-size: 11px;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 200ms var(--ease), transform 250ms var(--ease);
+}
+.note-preview:hover .note-preview-url { opacity: 1; transform: none; }
+
+/* Tech stack chips under the essay: two rows, duotone icons that pick up brand colour on hover. */
+.tech { display: flex; flex-direction: column; gap: 8px; margin-top: 28px; }
+.tech-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.tech-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px 4px 8px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 13px;
+  cursor: default;
+  animation: rise 420ms var(--ease) calc(120ms + var(--i) * 35ms) both;
+  transition: color 150ms var(--ease), border-color 150ms var(--ease), background-color 150ms var(--ease), transform 200ms var(--ease);
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(6px); }
+}
+.tech-icon { color: var(--muted); flex: none; overflow: visible; transition: color 200ms var(--ease), transform 300ms var(--ease); }
+.tech-icon .b { opacity: 0.3; }
+.tech-chip:hover { color: var(--fg); background: var(--hover); transform: translateY(-2px); }
+.tech-chip:hover .tech-icon { color: var(--brand); transform: rotate(-8deg) scale(1.1); }
 
 .stack {
   display: grid;
@@ -379,6 +435,37 @@ p { margin: 0 0 16px; }
 /* Contribution graph — GitHub's greens, per theme. */
 .graph { display: block; width: 600px; max-width: 100%; height: auto; }
 .graph-month { fill: var(--muted); font-size: 9px; }
+/* Weeks ripple in left to right when the card opens; vanish at once when it closes. */
+.graph-week {
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 260ms var(--ease), transform 320ms var(--ease);
+}
+.pop:hover .graph-week,
+.pop:focus-within .graph-week {
+  opacity: 1;
+  transform: none;
+  transition-delay: calc(60ms + var(--i) * 6ms);
+}
+
+/* Copy-email button in the "let's talk" note. */
+.email-row { display: flex; align-items: center; gap: 12px; margin-bottom: 2px; }
+.copy {
+  padding: 4px 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: color 150ms var(--ease), border-color 150ms var(--ease), background-color 150ms var(--ease), transform 100ms var(--ease);
+}
+.copy:hover { color: var(--fg); background: var(--hover); }
+.copy:active { transform: scale(0.94); }
+.copy[data-copied] { color: var(--g3); border-color: var(--g3); }
+.copy-label { display: inline-block; animation: roll 260ms var(--ease); }
 .graph-l0 { fill: var(--g0); }
 .graph-l1 { fill: var(--g1); }
 .graph-l2 { fill: var(--g2); }

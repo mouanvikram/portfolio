@@ -30,22 +30,25 @@ export function ContributionGraph({ data }: { data: Contributions }) {
           {m.label}
         </text>
       ))}
-      {weeks.map((week, i) =>
-        week.map((day, j) => {
-          const row = i === 0 ? j + first : j;
-          return (
-            <rect
-              key={day.date}
-              x={i * STEP}
-              y={16 + row * STEP}
-              width={CELL}
-              height={CELL}
-              rx={2}
-              className={`graph-l${day.level}`}
-            />
-          );
-        }),
-      )}
+      {weeks.map((week, i) => (
+        // One group per week so the columns can ripple in left to right.
+        <g key={week[0].date} className="graph-week" style={{ "--i": i } as React.CSSProperties}>
+          {week.map((day, j) => {
+            const row = i === 0 ? j + first : j;
+            return (
+              <rect
+                key={day.date}
+                x={i * STEP}
+                y={16 + row * STEP}
+                width={CELL}
+                height={CELL}
+                rx={2}
+                className={`graph-l${day.level}`}
+              />
+            );
+          })}
+        </g>
+      ))}
     </svg>
   );
 }
