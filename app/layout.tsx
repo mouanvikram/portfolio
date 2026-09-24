@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/next";
 import type { Metadata, Viewport } from "next";
 import { Clock } from "@/components/clock";
 import { Footer } from "@/components/footer";
@@ -36,6 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <main className="main">{children}</main>
           <Footer />
         </div>
+        <Analytics />
       </body>
     </html>
   );
