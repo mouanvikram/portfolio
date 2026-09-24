@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
-import { ContributionGraph } from "@/components/contribution-graph";
-import { site } from "@/lib/content";
+import { ContributionGraph } from "@/components/contribution-graph";import { site } from "@/lib/content";
 import { getContributions } from "@/lib/github";
 
 const ext = { target: "_blank", rel: "noreferrer" } as const;
@@ -45,12 +44,16 @@ export async function Footer() {
           {contributions && <ContributionGraph data={contributions} />}
         </Pop>
         <Pop href={site.x} label="X">
-          <Profile sub={`@${site.handle}`} />
-          <span className="pop-action">Open profile on X ↗</span>
+          <a className="pop-card-link" href={site.x} {...ext}>
+            <Profile sub={`@${site.handle}`} />
+            <span className="pop-action link">Open profile on X ↗</span>
+          </a>
         </Pop>
         <Pop href={site.gmail} label="Gmail">
-          <Profile sub={site.email} />
-          <span className="pop-action">Compose in Gmail ↗</span>
+          <a className="pop-card-link" href={site.gmail} {...ext}>
+            <Profile sub={site.email} />
+            <span className="pop-action link">Compose in Gmail ↗</span>
+          </a>
         </Pop>
       </span>
     </footer>
