@@ -80,7 +80,14 @@ body {
   gap: 16px;
   padding: 32px 0 96px;
 }
-.wordmark { font-weight: 600; letter-spacing: -0.01em; }
+.wordmark { font-weight: 600; letter-spacing: -0.01em; cursor: default; }
+/* Letters ripple up one after another on hover. */
+.wordmark span { display: inline-block; white-space: pre; }
+.wordmark:hover span { animation: wave 520ms var(--ease) calc(var(--i) * 28ms); }
+@keyframes wave {
+  30% { transform: translateY(-4px); }
+  60% { transform: translateY(1px); }
+}
 .header-right { display: flex; align-items: center; gap: 12px; }
 
 .clock {

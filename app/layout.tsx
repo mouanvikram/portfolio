@@ -28,7 +28,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <div className="shell">
           <header className="header">
-            <span className="wordmark">{site.name}</span>
+            <span className="wordmark" aria-label={site.name}>
+              {site.name.split("").map((ch, i) => (
+                <span key={i} aria-hidden style={{ "--i": i } as React.CSSProperties}>
+                  {ch}
+                </span>
+              ))}
+            </span>
             <span className="header-right">
               <Clock />
               <ThemeToggle />
