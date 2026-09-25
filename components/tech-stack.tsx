@@ -79,6 +79,23 @@ const tools: { name: string; brand: string; icon: ReactNode }[][] = [
       icon: <I><g className="b" {...F}><rect x="5" y="9" width="3" height="3" rx=".5" /><rect x="9" y="9" width="3" height="3" rx=".5" /><rect x="13" y="9" width="3" height="3" rx=".5" /><rect x="9" y="5" width="3" height="3" rx=".5" /></g><path d="M2.5 13.5h18c0 4-3.8 6.5-9 6.5s-9-2.5-9-6.5z" {...F} /></I>,
     },
   ],
+  [
+    {
+      name: "AWS",
+      brand: "#ff9900",
+      icon: <I><rect className="b" x="2" y="3" width="20" height="18" rx="4" {...F} /><text x="12" y="12.5" {...TXT}>aws</text><path d="M6 15.5q6 3.5 12 0M16 14.6l2.1.9-.7 2.1" {...S} strokeWidth={1.5} /></I>,
+    },
+    {
+      name: "EC2",
+      brand: "#ed7100",
+      icon: <I><rect className="b" x="6" y="6" width="12" height="12" rx="2" {...F} /><rect x="6" y="6" width="12" height="12" rx="2" {...S} /><rect x="9.5" y="9.5" width="5" height="5" rx="1" {...F} /><path d="M9.5 2.5V6M14.5 2.5V6M9.5 18v3.5M14.5 18v3.5M2.5 9.5H6M2.5 14.5H6M18 9.5h3.5M18 14.5h3.5" {...S} /></I>,
+    },
+    {
+      name: "S3",
+      brand: "#7aa116",
+      icon: <I><path className="b" d="M4 6.5 6 19c.2 1.3 2.8 2.3 6 2.3s5.8-1 6-2.3l2-12.5" {...F} /><ellipse cx="12" cy="6.5" rx="8" ry="3" {...S} /><path d="M4 6.5 6 19c.2 1.3 2.8 2.3 6 2.3s5.8-1 6-2.3l2-12.5" {...S} /></I>,
+    },
+  ],
 ];
 
 export function TechStack() {

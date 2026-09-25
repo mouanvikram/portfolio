@@ -293,7 +293,7 @@ p { margin: 0 0 16px; }
 }
 .note-preview:hover .note-preview-url { opacity: 1; transform: none; }
 
-/* Tech stack chips under the essay: two rows, duotone icons that pick up brand colour on hover. */
+/* Tech stack chips under the essay: rows of chips, duotone icons that pick up brand colour on hover. */
 .tech { display: flex; flex-direction: column; gap: 8px; margin-top: 28px; }
 .tech-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
 .tech-chip {
