@@ -42,7 +42,7 @@ const XLogo = () => (
   </svg>
 );
 
-function Profile({ sub, mark }: { sub: string; mark?: ReactNode }) {
+function Profile({ sub, mark }: { sub: ReactNode; mark?: ReactNode }) {
   return (
     <span className="profile">
       {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -65,14 +65,19 @@ export async function Footer() {
       <span className="footer-links">
         <Pop href={site.github} label="GitHub">
           <span className="pop-head">
-            <Profile sub={`github.com/${site.handle}`} />
+            <Profile
+              sub={
+                <a className="link" href={site.github} {...ext}>
+                  github.com/{site.handle}
+                </a>
+              }
+            />
             {contributions && <span className="pop-meta">{contributions.total.toLocaleString("en-US")} contributions in the last year</span>}
           </span>
           {contributions && <ContributionGraph data={contributions} />}
         </Pop>
         <Pop href={site.x} label="X">
           <a className="pop-card-link" href={site.x} {...ext}>
-            {xProfile?.banner && <span className="x-banner" style={{ backgroundImage: `url(${xProfile.banner})` }} />}
             <Profile sub={`@${site.handle}`} mark={<XLogo />} />
             {xProfile && (
               <span className="x-stats">

@@ -1,4 +1,4 @@
-export type XProfile = { followers: number; following: number; banner: string | null };
+export type XProfile = { followers: number; following: number };
 
 /**
  * Public X profile stats via the FxTwitter API (no auth needed), fetched at
@@ -13,8 +13,6 @@ export async function getXProfile(user: string): Promise<XProfile | null> {
     return {
       followers: u.followers,
       following: u.following,
-      // X serves banners at fixed sizes; 600x200 is plenty for the card.
-      banner: u.banner_url ? `${u.banner_url}/600x200` : null,
     };
   } catch {
     return null;
