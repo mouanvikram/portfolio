@@ -438,6 +438,7 @@ p { margin: 0 0 16px; }
 .profile img { border-radius: 50%; background: var(--hover); flex: none; }
 .profile strong { display: block; color: var(--fg); font-weight: 600; font-size: 14px; }
 .profile-sub { display: block; }
+.profile-mark { flex: none; margin-left: auto; padding-left: 16px; box-sizing: content-box; color: var(--fg); }
 
 /* Contribution graph — GitHub's greens, per theme. */
 .graph { display: block; width: 600px; max-width: 100%; height: auto; }
