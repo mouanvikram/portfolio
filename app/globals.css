@@ -423,6 +423,17 @@ p { margin: 0 0 16px; }
 .pop-card-link:active { transform: scale(0.98); }
 .pop-card-link:hover .link { background-size: 100% 1px, 100% 1px; }
 
+/* X card: banner bleeds to the card's rounded top, stats sit under the profile like on X. */
+.x-banner {
+  display: block;
+  aspect-ratio: 3 / 1;
+  margin: -6px -6px 0;
+  border-radius: 8px;
+  background: var(--hover) center / cover no-repeat;
+}
+.x-stats { display: flex; gap: 16px; font-variant-numeric: tabular-nums; }
+.x-stats strong { color: var(--fg); font-weight: 600; }
+
 .profile { display: flex; align-items: center; gap: 10px; min-width: 220px; }
 .profile img { border-radius: 50%; background: var(--hover); flex: none; }
 .profile strong { display: block; color: var(--fg); font-weight: 600; font-size: 14px; }

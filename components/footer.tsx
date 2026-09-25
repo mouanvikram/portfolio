@@ -2,6 +2,7 @@ import { ContributionGraph } from "@/components/contribution-graph";
 import { Pop } from "@/components/pop";
 import { site } from "@/lib/content";
 import { getContributions } from "@/lib/github";
+import { getXProfile } from "@/lib/x";
 
 const ext = { target: "_blank", rel: "noreferrer" } as const;
 
@@ -19,7 +20,7 @@ function Profile({ sub }: { sub: string }) {
 }
 
 export async function Footer() {
-  const contributions = await getContributions(site.handle);
+  const [contributions, xProfile] = await Promise.all([getContributions(site.handle), getXProfile(site.handle)]);
 
   return (
     <footer className="footer">
@@ -34,7 +35,14 @@ export async function Footer() {
         </Pop>
         <Pop href={site.x} label="X">
           <a className="pop-card-link" href={site.x} {...ext}>
+            {xProfile?.banner && <span className="x-banner" style={{ backgroundImage: `url(${xProfile.banner})` }} />}
             <Profile sub={`@${site.handle}`} />
+            {xProfile && (
+              <span className="x-stats">
+                <span><strong>{xProfile.following.toLocaleString("en-US")}</strong> Following</span>
+                <span><strong>{xProfile.followers.toLocaleString("en-US")}</strong> Followers</span>
+              </span>
+            )}
             <span className="pop-action link">Open profile on X ↗</span>
           </a>
         </Pop>
