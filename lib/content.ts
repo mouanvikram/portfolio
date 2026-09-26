@@ -10,7 +10,8 @@ export const site = {
   github: "https://github.com/mouanvikram",
   x: "https://x.com/mouanvikram",
   uncutUi: "https://github.com/uncut-ui",
-  uncutUiLive: "https://uncut-ui.mouan.in",
+  uncutUiLive: "https://uncut.mouan.in",
+  ogImage: "https://vikram.mouan.in/og.jpg",
   // Opens Gmail's compose window with the address already in the "To" field.
   gmail: "https://mail.google.com/mail/?view=cm&fs=1&to=mouanvikram@gmail.com",
 };
